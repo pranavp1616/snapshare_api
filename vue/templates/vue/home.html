@@ -1,0 +1,196 @@
+{% extends 'vue/header.html' %}
+{% block content %}
+<div id='mainApp'>
+
+    <!-- Likes popup MODAL  -->
+    <div v-if='likeModalPopup==true'>
+        <div id="overlay">
+            <div class="container center" style="padding : 10%; max-width: 550px;">
+                <div class="card z-depth-5">
+                    <div class="card-content">
+                        <div class="row">
+                            <div @click='likeModalPopup=false' class="btn-floating grey">
+                                <i class="material-icons">close</i>
+                            </div>
+                        </div>
+                        <ul>
+                            <li v-for='k in all_likes'>
+                                <a @click='gotoFriendPage(k.username)'><b>[[ k.username ]]</b></a>
+                            </li>
+                        </ul>        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comments popup MODAL -->
+    <div v-if='CommentModalPopup==true'>
+        <div id="overlay">
+            <div class="container center" style="padding : 10%; max-width: 700px;">
+                <div class="card z-depth-5">
+                    <div class="card-content">
+                        <div class="row">
+                            <div @click='CommentModalPopup=false' class="btn-floating grey">
+                                <i class="material-icons">close</i>
+                            </div>
+                        </div>
+                        <ul>
+                            <li v-for='k in all_comments'>
+                                <div class="row">
+                                    <div class="col left">
+                                        <a @click='gotoFriendPage(k.username)'><b>[[ k.username ]]</b></a> : 
+                                        [[ k.comment ]] 
+                                        <i>[[k.date_created]]</i> 
+                                        <i  v-if='k.username==loggedin_user' @click='deleteComment(k)' class="material-icons">delete</i>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- First row = MENU navigation -->
+    <div class="navbar-fixed">
+        <nav class="nav-wrapper indigo">
+            <div class="container">
+                <div class="left">
+                    Snapshare
+                </div>
+                <ul class="right">
+                    <li><a @click='setPageType("home")' class="hoverable">home</a></li>
+                    <li><input v-model='searchbar_input' placeholder="search friend.." type="text"/></li>
+                    <li><a @click='setPageType("search")'><i class="material-icons" class="hoverable">search</i></a>
+                    <li><a @click='setPageType("myprofile")' class="hoverable"> hi [[loggedin_user]]  </a></li>
+                    <li><a onclick='logout()' class="hoverable">logout</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <!-- second row = PAGE TYPE -->
+    <div class="row">
+        <div class="container center">
+            [[ page_type ]] 
+        </div>
+    </div>
+    <!-- third row = SEARCH RESULTS -->
+    <div v-if="page_type=='search'">
+        <div class="row" style="margin-left: 10%;
+            margin-right: 10%;">
+            <div class="container">
+                <div class="card z-depth-4">
+                    <ul class="collection  with-header">
+                        <li class="collection-header">Search results for '[[searchbar_input]]' </li>
+                        <li v-for='i in search_results'>
+                            <a @click='gotoFriendPage(i.username)' class="collection-item">[[i.username]]</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- third row = UPLOAD PHOTO -->
+    <div v-if="page_type=='myprofile'">
+        <div class="row" style="margin-left: 15%;
+        margin-right: 15%;">
+            <div class="container center">
+                <div class="card hoverable">
+                    <div class="card-content">
+                        <div class="card-title">
+                            New post
+                        </div>
+                        <div class="input-field">
+                            <input v-model='upload_hashtags' type="text" id="hashtags" required/> 
+                            <label for='hashtags'>hashtags</label>           
+                        </div>
+                        <div class="file-field input-field">
+                            <div class = "btn">
+                                <span>Browse</span>
+                                <input @change='loadUploadImage' type="file"  accept="image/*" required>
+                            </div>
+                            <div class = "file-path-wrapper">
+                                <input class = "file-path validate" type = "text" placeholder = "Upload file" />
+                            </div>
+                        </div>
+                        <a @click='uploadPhotopost()' class="btn waves-effect waves-light">Upload</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fourth row = POPULATE GET DATA -->
+    <div v-if="page_type != 'search'">
+        <ul>
+            <li v-for='i in main_data'>
+                <div class="row" style="margin-left: 15%;
+                    margin-right: 15%;">
+                    <div class="container">
+                        <div class="card hoverable z-depth-2">
+                            <!-- CARD image starts here-->
+                            <div class="card-image">
+                                <img :src='[[i.image]]' />
+                                <!-- LIKE BUTTON -->
+                                <div @click='likePhoto(i)'>
+                                    <div v-if='i.is_liked==true'>
+                                        <div class="btn-floating halfway-fab hoverable left">
+                                            <i class="material-icons red">favorite</i>   
+                                        </div>
+                                    </div>
+                                    <div v-else>
+                                        <div class="btn-floating halfway-fab hoverable left">
+                                            <i class="material-icons grey">favorite</i>   
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- DELETE Button if its myprofile page-->
+                                <div v-if="page_type=='myprofile'">
+                                    <div @click="deletePhotopost(i)" class="btn-floating halfway-fab hoverable red right">
+                                        <i class="material-icons">delete_forever</i>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- CARD data starts here-->
+                            <div class="card-content">
+                                <div class="row">
+                                    <div class="col left">                                        
+                                        <b @click='gotoFriendPage(i.uploaded_by)' class="blue-text hoverable">[[i.uploaded_by]]</b>        
+                                        <i class="black-text"> [[ i.hashtags ]] </i>
+                                    </div>
+                                    <div class="col right">                                        
+                                        <i class="grey-text right"> [[ i.date_created ]] </i>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col s3">
+                                        <input v-model='upload_comment' placeholder="add comment..." type="text"/>
+                                    </div>
+                                    <div class="col s1">
+                                        <div @click='commentPhoto(i)' class="btn-floating waves-effect waves-light hoverable">
+                                            <i class="material-icons">send</i>
+                                        </div>
+                                    </div>
+                                    <div class="col right">
+                                        <div @click='getAllLikes(i)' class="btn hoverable">
+                                            View all likes
+                                        </div>
+                                        <div @click='getAllComments(i)' class="btn hoverable">
+                                            View all comments
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+{%  load static %}
+<script  type="text/Javascript" src="{% static 'vue/home.js' %}"> </script>
+{% endblock content %}

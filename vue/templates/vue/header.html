@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS -->    {% load static %}
+                    <link rel="stylesheet" type="text/css" href="{% static 'vue/style.css' %}">
+    <!-- Vue JS-->  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <!-- GOOGLE UI - MATERIALIZE-->
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- JQuery-->
+    <script src='https://code.jquery.com/jquery-3.5.1.min.js'></script>
+
+    
+</head>
+<body>    
+    {%  load static %}
+    <script  type="text/Javascript" src="{% static 'vue/header.js' %}"> </script>
+    {% block content %}
+        <!-- child HTML templates -->
+    {% endblock content %}
+</body>
+</html>
