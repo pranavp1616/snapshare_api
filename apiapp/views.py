@@ -155,7 +155,7 @@ def getAllLikes(request, pk):
     usernames = []
     for i in likes:
         usernames.append({'username':i.by.username})
-    page_obj = Paginator(data,GETALLLIKES_PER_PAGE)
+    page_obj = Paginator(usernames,GETALLLIKES_PER_PAGE)
     szr = getUsernamesSZR(page_obj.page(1),many=True)
     return Response(szr.data)
 
