@@ -92,7 +92,6 @@ WSGI_APPLICATION = 'mainProject.wsgi.application'
 
 
 # config for sqlite database
-
 DATABASES = {
     'default': {
     'ENGINE': 'django.db.backends.sqlite3',
@@ -100,35 +99,6 @@ DATABASES = {
     }
 }
 
-'''
-# config for HEROKU - postgresql
-import dj_database_url
-db_from_env = dj_database_url.config(conn_max_age=600)
-DATABASES['default'].update(db_from_env)
-'''
-
-'''
-#   AWS RDS (postgres) CONFIG
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'my_snapshare_1',
-        'USER': 'postgres',
-        'PASSWORD':'postgres',
-        'HOST':'<give AWS RDS database endpoint here>',
-        'PORT':5432,
-    }
-}
-
-#   AWS S3 BUCKET CONFIG (IAM USER KEY)
-AWS_ACCESS_KEY_ID = ''
-AWS_SECRET_ACCESS_KEY = ''
-AWS_STORAGE_BUCKET_NAME = ''
-AWS_S3_FILE_OVERWRITE = False
-AWS_DEFAULT_ACL = None
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-'''
 
 
 # Password validation
