@@ -23,9 +23,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'l4(q&exei8*zfb#sl6b8u=8t^920)0dphcd+mlitw_b)c-x*eb'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+# Heroku deployment config
+ALLOWED_HOSTS = ['snapshare-restapi.herokuapp.com/','127.0.0.1']
 
 
 # Application definition
@@ -89,14 +90,16 @@ WSGI_APPLICATION = 'mainProject.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 
-#   config for OLD sqlite database
-#   DATABASES = {
-#        'default': {
-#            'ENGINE': 'django.db.backends.sqlite3',
-#           'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#       }
-#}
+# config for sqlite database
 
+DATABASES = {
+    'default': {
+    'ENGINE': 'django.db.backends.sqlite3',
+    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+
+'''
 #   AWS RDS (postgres) CONFIG
 DATABASES = {
     'default': {
@@ -117,7 +120,7 @@ AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
+'''
 
 
 # Password validation
