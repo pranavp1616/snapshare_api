@@ -26,7 +26,7 @@ SECRET_KEY = 'l4(q&exei8*zfb#sl6b8u=8t^920)0dphcd+mlitw_b)c-x*eb'
 DEBUG = False
 
 # Heroku deployment config
-ALLOWED_HOSTS = ['snapshare-restapi.herokuapp.com/','127.0.0.1']
+ALLOWED_HOSTS = ['snapshare-restapi.herokuapp.com','127.0.0.1']
 
 
 # Application definition
