@@ -45,8 +45,6 @@ INSTALLED_APPS = [
     
     'apiapp',
     'vue',
-
-    'storages', #For AWS S3 bucket
 ]
 
 MIDDLEWARE = [
