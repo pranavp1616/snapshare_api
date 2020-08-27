@@ -19,13 +19,17 @@ GETALLCOMMENTS_PER_PAGE = 10
 def registerUser(request):
     szr = registerUserSZR(data=request.data)
     if szr.is_valid():
-        # add if user is already available case
         new_user = User.objects.create_user(username=szr.data['username'],
                                             email=szr.data['email'],
                                             password=szr.data['password'])        
         if new_user:
             return Response({   'response':'success', 'message':'Registration completed. Please login'  })
-    return Response({ 'response':'error', 'message':'data error API FIX reqd'})
+    try:
+        user = User.objects.get(username=szr.data['username']) 
+        return Response({ 'response':'error', 'message':'username not available'})
+    except:
+        return Response({ 'response':'error', 'message':'invalid input'})
+    return Response({ 'response':'error', 'message':'server error'})
 
 
 # login user
