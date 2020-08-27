@@ -61,6 +61,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ORIGIN_WHITELIST = [
+    'snapshare.netlify.app',
     'localhost:3000' #Give react UI ip address here after hosting 
 ]
 
