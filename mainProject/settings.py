@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'l4(q&exei8*zfb#sl6b8u=8t^920)0dphcd+mlitw_b)c-x*eb'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # Heroku deployment config
 ALLOWED_HOSTS = ['snapshare-restapi.herokuapp.com','127.0.0.1']
