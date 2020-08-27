@@ -9,10 +9,10 @@ from .serializers import registerUserSZR,loginUserSZR,createPhotopostSZR,getPhot
 from .models import Photopost,LikesPhotopost,CommentsPhotopost
 
 #paginator 
-PHOTOS_PER_PAGE = 10
-SEARCH_RESULTS_PER_PAGE = 15
-GETALLLIKES_PER_PAGE = 10
-GETALLCOMMENTS_PER_PAGE = 10
+PHOTOS_PER_PAGE = 40
+SEARCH_RESULTS_PER_PAGE = 30
+GETALLLIKES_PER_PAGE = 20
+GETALLCOMMENTS_PER_PAGE = 20
 
 # Register user
 @api_view(['POST'])
