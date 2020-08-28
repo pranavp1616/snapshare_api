@@ -102,7 +102,7 @@ def getData(request,posts):
         httphdr = request.is_secure() and "https://" or "http://"
         final_data.append({
                 'id':i.id,
-                'image':i.image # httphdr+request.get_host()+i.image.url - set this if its not working in localhost -(to return full URL so that UI running on other domains can display image)
+                'image':i.image, # httphdr+request.get_host()+i.image.url - set this if its not working in localhost -(to return full URL so that UI running on other domains can display image)
                 'uploaded_by':i.uploaded_by,
                 'is_liked': is_liked,
                 'hashtags':i.hashtags,
