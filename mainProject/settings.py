@@ -26,7 +26,7 @@ SECRET_KEY = 'l4(q&exei8*zfb#sl6b8u=8t^920)0dphcd+mlitw_b)c-x*eb'
 DEBUG = True
 
 # Heroku deployment config
-ALLOWED_HOSTS = ['snapshare-restapi.herokuapp.com','127.0.0.1']
+ALLOWED_HOSTS = ['snapshare-restapi.herokuapp.com','127.0.0.1','localhost']
 
 
 # Application definition
@@ -61,8 +61,9 @@ MIDDLEWARE = [
 ]
 
 CORS_ORIGIN_WHITELIST = [
-    'snapshare.netlify.app',
-    'localhost:3000' #Give react UI ip address here after hosting 
+    'snapshare.netlify.app', # react UI ip here after hosting
+    'localhost:3000',
+    '127.0.0.1:3000',
 ]
 
 ROOT_URLCONF = 'mainProject.urls'
@@ -91,13 +92,24 @@ WSGI_APPLICATION = 'mainProject.wsgi.application'
 
 
 # config for sqlite database
+#DATABASES = {
+#    'default': {
+#    'ENGINE': 'django.db.backends.sqlite3',
+#    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#    }
+#}
+
+#condif for postgres database (localhost)
 DATABASES = {
     'default': {
-    'ENGINE': 'django.db.backends.sqlite3',
-    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'MY_SNAPSHARE_DB',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
-
 
 
 # Password validation
