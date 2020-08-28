@@ -157,7 +157,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # For Heroku config
 STATIC_URL = '/static/'
 
 # photopost config
-MEDIA_ROOT =  os.path.join(BASE_DIR, 'media') 
+# MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')     (This is required only in local file system storage,, NOT on production )
 MEDIA_URL = '/media/'
 
 # AWS S3 images/media storage config
