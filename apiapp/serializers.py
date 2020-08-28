@@ -23,8 +23,8 @@ class createPhotopostSZR(serializers.ModelSerializer):
 
 class getPhotopostSZR(serializers.Serializer):
     id              =   serializers.IntegerField()
-#    image           =   serializers.ImageField()
-    image           =   serializers.CharField(max_length=2083) #we are returning image url (not image) 
+    image           =   serializers.ImageField()
+#    image           =   serializers.CharField(max_length=2083) #we are returning image url (not image) 
     uploaded_by     =   serializers.CharField(max_length=255)
     is_liked        =   serializers.BooleanField(default=False)
     hashtags        =   serializers.CharField(max_length=255)
