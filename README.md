@@ -8,6 +8,7 @@ libraries reqd:
     django-cors-middleware  (For cross origin to work with react)
     psycopg2 (For django + postgres connection)
     dj-database-url (For django + postgres conn on Heroku server)
+    boto3 and django-storages (For django + AWS S3)
 
 
 Deployed on :
