@@ -89,10 +89,24 @@ def getData(request,posts,pageNo):
         cmnts = CommentsPhotopost.objects.filter(image=i).order_by('-date_created')
         top_likes = []
         top_cmnts = []
+
+        # add latest 3 likes to top_likes
+        count = 3
         for j in lks:
-            top_likes.append({'username':j.by.username})
+            if count > 0:
+                top_likes.append({'username':j.by.username})
+                count = count - 1
+            else:
+                break
+
+        # add latest 3 comments to top_cmnts
+        count = 3
         for j in cmnts:
-            top_cmnts.append({'username':j.by.username, 'comment':j.comment})
+            if count > 0:
+                top_cmnts.append({'username':j.by.username, 'comment':j.comment})
+                count = count - 1
+            else:
+                break
         
         try:
             LikesPhotopost.objects.get(image=i,by=request.user)
