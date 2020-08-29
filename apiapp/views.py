@@ -108,7 +108,9 @@ def getData(request,posts,pageNo):
                 'hashtags':i.hashtags,
                 'date_created':i.date_created,
                 'topLikes':top_likes,
+                'totalLikes':lks.__len__,
                 'topComments':top_cmnts,
+                'totalComments':cmnts.__len__,
                 })
     page_obj = Paginator(final_data,PHOTOS_PER_PAGE)
     try:

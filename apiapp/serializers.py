@@ -30,8 +30,9 @@ class getPhotopostSZR(serializers.Serializer):
     hashtags        =   serializers.CharField(max_length=255)
     date_created    =   serializers.DateTimeField(format="%d/%m/%Y at %I:%M %p")
     topLikes        =   serializers.ListField(child=serializers.CharField(max_length=255))
+    totalLikes      =   serializers.IntegerField()
     topComments     =   serializers.ListField(child=serializers.CharField(max_length=255))
-
+    totalComments   =   serializers.IntegerField()
 
 #search user serializer
 class getUsernamesSZR(serializers.Serializer):
