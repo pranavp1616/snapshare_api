@@ -9,7 +9,7 @@ from .serializers import registerUserSZR,loginUserSZR,createPhotopostSZR,getPhot
 from .models import Photopost,LikesPhotopost,CommentsPhotopost
 
 #paginator 
-PHOTOS_PER_PAGE = 40
+PHOTOS_PER_PAGE = 5
 SEARCH_RESULTS_PER_PAGE = 30
 GETALLLIKES_PER_PAGE = 20
 GETALLCOMMENTS_PER_PAGE = 20
@@ -58,10 +58,10 @@ def logoutUser(request):
 
 @api_view(['GET'])
 @permission_classes((IsAuthenticated,))
-def homeFeed(request):
+def homeFeed(request, pageNo):
     posts = Photopost.objects.all().order_by('-date_created') #change this to latest posts alone - 
     #Practically you need only need last 2 days posts (not one year before posts in feed)
-    return getData(request,posts)
+    return getData(request,posts,pageNo)
     
 # search user and retrive a list of matchin names
 @api_view(['GET'])
@@ -75,12 +75,12 @@ def searchUser(request, pattern):
 # my profile posts or friends profile posts
 @api_view(['GET'])
 @permission_classes((IsAuthenticated,))
-def getUserPosts(request, username):
+def getUserPosts(request, username, pageNo):
     user = User.objects.get(username=username)
     posts = Photopost.objects.filter(uploaded_by=user).order_by('-date_created')    
-    return getData(request,posts)
+    return getData(request,posts,pageNo)
 
-def getData(request,posts):
+def getData(request,posts,pageNo):
     final_data = []
     top_likes = []
     top_cmnts = []
@@ -108,10 +108,13 @@ def getData(request,posts):
                 'hashtags':i.hashtags,
                 'date_created':i.date_created,
                 'topLikes':top_likes,
-                'topComments':top_cmnts
+                'topComments':top_cmnts,
                 })
     page_obj = Paginator(final_data,PHOTOS_PER_PAGE)
-    szr = getPhotopostSZR(page_obj.page(1),many=True)
+    try:
+        szr = getPhotopostSZR(page_obj.page(pageNo),many=True)
+    except:
+        return Response({'response':'error','message':'PageDoestNotExist'})
     return Response(szr.data)
        
 

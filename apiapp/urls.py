@@ -4,13 +4,12 @@ from .views import *
 
 urlpatterns = [
     # home-feed
-    path('home-feed/', homeFeed, name='homeFeed'),
+    path('home-feed/page/<int:pageNo>', homeFeed, name='homeFeed'),
+    # myprofile posts OR  friend profile posts
+    path('getuserposts/<str:username>/page/<int:pageNo>', getUserPosts, name='getUserPosts'),  #returns single users posts
 
     # search
     path('search/<str:pattern>', searchUser, name='searchUser'), #returns all matching usernames for given pattern
-
-    # myprofile posts OR  friend profile posts
-    path('getuserposts/<str:username>', getUserPosts, name='getUserPosts'),  #returns single users posts
 
     # User
     path('user/login/', loginUser, name='loginUser'),
