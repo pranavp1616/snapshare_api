@@ -130,7 +130,9 @@ def getData(request,posts,pageNo):
     try:
         szr = getPhotopostSZR(page_obj.page(pageNo),many=True)
     except:
-        return Response({'response':'error','message':'PageDoestNotExist'})
+        # return empty array
+        empty_array = []
+        return Response(empty_array)
     return Response(szr.data)
        
 
